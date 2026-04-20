@@ -49,7 +49,7 @@ export const useProductStore = create((set) => ({
         set(state => ({
             products: state.products.map(product => product._id === pid ? data.data : product)
         }))
-        return {success: true, message: "Product updated successfully"}
+        return {success: true, message: data.message}
     }
 
 }))
