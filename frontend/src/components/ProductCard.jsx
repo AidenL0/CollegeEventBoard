@@ -14,6 +14,7 @@ const ProductCard = ({product}) => {
     const {deleteProduct, updateProduct} = useProductStore()
     const toast = useToast()
     const {isOpen, onOpen, onClose} = useDisclosure()
+    const {isOpen: isDetailOpen, onOpen: onDetailOpen, onClose: onDetailClose} = useDisclosure()
 
     const handleUpdateProduct = async (pid, updatedProduct) => {
         const {success, message} = await updateProduct(pid, updatedProduct)
@@ -65,8 +66,9 @@ const ProductCard = ({product}) => {
         rounded="lg"
         overflow="hidden"
         transition="all 0.3s"
-        _hover={{ transform: "translateY(-5px)", shadow: "xl" }}
+        _hover={{ transform: "translateY(-5px)", shadow: "xl", cursor: "pointer" }}
         bg={bg}
+        onClick={onDetailOpen}
         >
             <Image src={product.image} alt={product.name} h={48} w="full" objectFit="cover" />
 
@@ -79,7 +81,7 @@ const ProductCard = ({product}) => {
                     ${product.price}
                 </Text>
 
-                <HStack spacing={2}>
+                <HStack spacing={2} onClick={(e) => e.stopPropagation()}>
                     <IconButton icon={<EditIcon />} colorScheme="blue"  onClick={onOpen} />
                     <IconButton icon={<DeleteIcon />} onClick={() => handleDeleteProduct(product._id)} colorScheme="red" />
                 </HStack>
@@ -96,8 +98,6 @@ const ProductCard = ({product}) => {
 
                         <Input placeholder="Product Price" name='price' value={updatedProduct.price} onChange={(e) => setUpdatedProduct({...updatedProduct, price: e.target.value})}/>
 
-                        <Input placeholder="Event Image URL" name='imageUrl' value={updatedProduct.image} onChange={(e) => setUpdatedProduct({...updatedProduct, image: e.target.value})} />
-
                     </VStack>                        
                     </ModalBody>
                     <ModalFooter>
@@ -108,6 +108,39 @@ const ProductCard = ({product}) => {
                         </Button>
                         <Button variant="ghost" onClick={onClose}>
                             Cancel
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+            <Modal isOpen={isDetailOpen} onClose={onDetailClose} size="lg">
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Event Details</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                    <VStack spacing={4} align="start">
+                        <Box>
+                            <Text fontWeight="bold" mb={1}>Event Name</Text>
+                            <Text>{product.name}</Text>
+                        </Box>
+                        <Box>
+                            <Text fontWeight="bold" mb={1}>Price</Text>
+                            <Text>${product.price}</Text>
+                        </Box>
+                        <Box>
+                            <Text fontWeight="bold" mb={1}>Date</Text>
+                            <Text>{new Date(product.eventDate).toLocaleString()}</Text>
+                        </Box>
+                        <Box>
+                            <Text fontWeight="bold" mb={1}>Description</Text>
+                            <Text>{product.description}</Text>
+                        </Box>
+                    </VStack>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button variant="ghost" onClick={onDetailClose}>
+                            Close
                         </Button>
                     </ModalFooter>
                 </ModalContent>

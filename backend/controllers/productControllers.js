@@ -15,8 +15,8 @@ export const getProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
     const product = req.body;
 
-    if (!product.name || !product.price || !product.image) {
-        return res.status(400).json({ success:false, message: 'Please provide name, price, and image for the product.' });
+    if (!product.name || !product.price || !product.image || !product.eventDate) {
+        return res.status(400).json({ success:false, message: 'Please provide name, price, and event date for the product.' });
     }
 
     const newProduct = new Product(product);

@@ -1,15 +1,19 @@
 import { useState } from "react"
-import { Container, useColorModeValue, VStack, Heading, Box, Button, Input } from "@chakra-ui/react"
+import { Container, useColorModeValue, VStack, Heading, Box, Button, Input, Textarea } from "@chakra-ui/react"
 import { create } from "zustand"
 import { useProductStore } from "../store/product"
 import { useToast } from "@chakra-ui/react"
+
+const CONSTANT_IMAGE_URL = "https://images.unsplash.com/photo-1513886254403-8581397953fa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; // Change this to your image URL
 
 const CreatePage = () => {
 
     const [newProduct, setNewProduct] = useState({
         name: "",
         price: "",
-        image: ""
+        image: CONSTANT_IMAGE_URL,
+        eventDate: "",
+        description: ""
     })
 
     const toast = useToast() // this is a hook from chakra ui that allows us to show toast notifications, we will use it to show success or error messages when creating a product
@@ -38,7 +42,9 @@ const CreatePage = () => {
         setNewProduct({
             name: "",
             price: "",
-            image: ""
+            image: CONSTANT_IMAGE_URL,
+            eventDate: "",
+            description: ""
         })
     }
     return (
@@ -58,17 +64,26 @@ const CreatePage = () => {
                         />
 
                         <Input 
-                        placeholder="Product Price" 
+                        placeholder="Event Price" 
                         name='price' 
+                        type='number'
                         value={newProduct.price}
                         onChange={(e) => setNewProduct({...newProduct, price: e.target.value})}
                         />
 
                         <Input 
-                        placeholder="Event Image URL" 
-                        name='imageUrl' 
-                        value={newProduct.image}
-                        onChange={(e) => setNewProduct({...newProduct, image: e.target.value})}
+                        placeholder="Event Date" 
+                        name='eventDate' 
+                        type='datetime-local'
+                        value={newProduct.eventDate}
+                        onChange={(e) => setNewProduct({...newProduct, eventDate: e.target.value})}
+                        />
+
+                        <Textarea 
+                        placeholder="Event Description" 
+                        name='description' 
+                        value={newProduct.description}
+                        onChange={(e) => setNewProduct({...newProduct, description: e.target.value})}
                         />
 
                         <Button colorScheme="blue" onClick={handleAppProduct} w="full">

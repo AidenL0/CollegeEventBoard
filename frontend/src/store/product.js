@@ -4,7 +4,7 @@ export const useProductStore = create((set) => ({
     products: [],
     setProduct: (products) => set({products}),
     createProduct: async (newProduct) => {
-        if(!newProduct.name || !newProduct.price || !newProduct.image) {
+        if(!newProduct.name || !newProduct.image || !newProduct.eventDate) {
             return {success: false, message: "All fields are required"}
         }
         const res = await fetch("/api/products", {
@@ -16,7 +16,7 @@ export const useProductStore = create((set) => ({
         })
         const data = await res.json()
         set((state) => ({products: [...state.products, data.product]}))
-        return {success: true, message: "Product created successfully"}
+        return {success: true, message: "Event created successfully"}
     },
     fetchProducts: async () => {
         const res = await fetch("/api/products")

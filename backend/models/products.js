@@ -6,13 +6,23 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     price: {
-        type: Number,
+        type: String,
         required: true
     },
     image: {
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: false
+    },
+    eventDate: {
+        type: Date,
+        required: true,
+        index: { expires: 864000 } // 1 day in seconds
+    },
+    
 }, {
     timestamps: true
 });
