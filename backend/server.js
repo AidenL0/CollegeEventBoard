@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import productRoutes from './routes/productRoute.js';
 import path from 'path';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -12,7 +13,9 @@ const __dirname = path.resolve(); // gets the current directory path
 
 app.use(express.json()); // allows us to accept JSON data in request bodies
 
-app.use("/api/products", productRoutes);
+app.use("/api/products", productRoutes); // API routes for products
+
+app.use("/api/users", userRoutes); // API routes for users
 
 //postman
 
