@@ -66,3 +66,24 @@ export const updateUser = async (req,res) => {
         res.status(500).json({ success: false, message: "Server Error"});
     }
 };
+
+export const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(400).json({ success: false, message: 'Please provide email and password.' });
+    }
+
+    try {
+        const user = await Users.findOne({ email });
+        
+        if (!user || user.password !== password) { // In production, use bcrypt!
+            return res.status(401).json({ success: false, message: "Invalid credentials" });
+        }
+
+        res.status(200).json({ success: true, user: { id: user._id, username: user.username, email: user.email } });
+    } catch (error) {
+        console.error('Error logging in:', error.message);
+        res.status(500).json({ success: false, message: "Server Error" });
+    }
+};
