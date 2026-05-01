@@ -136,6 +136,10 @@ const ProductCard = ({product}) => {
                             <Text fontWeight="bold" mb={1}>Description</Text>
                             <Text>{product.description}</Text>
                         </Box>
+                        <Box>
+                            <Text fontWeight="bold" mb={1}>Location</Text>
+                            <Text>{product.location || "No location provided"}</Text>
+                        </Box>
                     </VStack>
                     </ModalBody>
                     <ModalFooter>

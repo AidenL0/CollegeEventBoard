@@ -22,6 +22,10 @@ const productSchema = new mongoose.Schema({
         required: true,
         index: { expires: 864000 } // 1 day in seconds
     },
+    location: {
+        type: String,
+        required: false
+    },
     
 }, {
     timestamps: true

@@ -13,7 +13,8 @@ const CreatePage = () => {
         price: "",
         image: CONSTANT_IMAGE_URL,
         eventDate: "",
-        description: ""
+        description: "",
+        location: ""
     })
 
     const toast = useToast()
@@ -58,7 +59,8 @@ const CreatePage = () => {
             price: "",
             image: CONSTANT_IMAGE_URL,
             eventDate: "",
-            description: ""
+            description: "",
+            location: ""
         })
     }
 
@@ -100,6 +102,13 @@ const CreatePage = () => {
                             name='description' 
                             value={newProduct.description}
                             onChange={(e) => setNewProduct({...newProduct, description: e.target.value})}
+                            />
+
+                            <Input 
+                            placeholder="Event Location/Address" 
+                            name='location' 
+                            value={newProduct.location}
+                            onChange={(e) => setNewProduct({...newProduct, location: e.target.value})}
                             />
 
                             <Button colorScheme="blue" onClick={handleAppProduct} w="full">
